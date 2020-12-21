@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "author": "typhonrt",
   "bugs": "https://github.com/typhonjs-node-bundle/plugin-string/issues",
-  "dependencies": {},
+  "dependencies": {
+    "@oclif/command": "^1.8.0",
+    "rollup-plugin-string": "^3.0.0"
+  },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@oclif/plugin-help": "^3.2.1",
@@ -38,6 +41,7 @@
   },
   "repository": "typhonjs-node-bundle/plugin-string",
   "scripts": {
+    "eslint": "eslint .",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint .",
     "prepack": "oclif-dev manifest && oclif-dev readme",
