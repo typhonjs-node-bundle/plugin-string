@@ -71,7 +71,34 @@ function s_ADD_FLAGS(command)
                   'char': 's',
                   'description': 'Allows imports of string / text content.',
                   'multiple': true,
-                  'default': '**/*.html'
+                  'default': function()
+                  {
+                     if (typeof process.env.DEPLOY_STRING === 'string')
+                     {
+                        const str = process.env.DEPLOY_STRING;
+                        let result = str;
+
+                        // Treat it as a JSON array.
+                        if (str.startsWith('['))
+                        {
+                           try { result = JSON.parse(str); }
+                           catch (error)
+                           {
+                              const parseError = new Error(
+                               `Could not parse 'DEPLOY_STRING' as a JSON array;\n${error.message}`);
+
+                              // Set magic boolean for global CLI error handler to skip treating this as a fatal error.
+                              parseError.$$bundler_fatal = false;
+
+                              throw parseError;
+                           }
+                        }
+
+                        return result;
+                     }
+
+                     return '**/*.html';
+                  }
                })
             }
          });
