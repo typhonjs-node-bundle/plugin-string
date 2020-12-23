@@ -75,29 +75,35 @@ function s_ADD_FLAGS(command)
                   {
                      if (typeof process.env.DEPLOY_STRING === 'string')
                      {
-                        const str = process.env.DEPLOY_STRING;
-                        let result = str;
+                        let result = void 0;
 
                         // Treat it as a JSON array.
-                        if (str.startsWith('['))
+                        try { result = JSON.parse(process.env.DEPLOY_STRING); }
+                        catch (error)
                         {
-                           try { result = JSON.parse(str); }
-                           catch (error)
-                           {
-                              const parseError = new Error(
-                               `Could not parse 'DEPLOY_STRING' as a JSON array;\n${error.message}`);
+                           const parseError = new Error(
+                            `Could not parse 'DEPLOY_STRING' as a JSON array;\n${error.message}`);
 
-                              // Set magic boolean for global CLI error handler to skip treating this as a fatal error.
-                              parseError.$$bundler_fatal = false;
+                           // Set magic boolean for global CLI error handler to skip treating this as a fatal error.
+                           parseError.$$bundler_fatal = false;
 
-                              throw parseError;
-                           }
+                           throw parseError;
+                        }
+
+                        if (!Array.isArray(result))
+                        {
+                           const parseError = new Error(`Please format 'DEPLOY_STRING' as a JSON array.`);
+
+                           // Set magic boolean for global CLI error handler to skip treating this as a fatal error.
+                           parseError.$$bundler_fatal = false;
+
+                           throw parseError;
                         }
 
                         return result;
                      }
 
-                     return '**/*.html';
+                     return ['**/*.html'];
                   }
                })
             }
