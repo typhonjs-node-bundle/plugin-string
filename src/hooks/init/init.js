@@ -69,7 +69,7 @@ function s_ADD_FLAGS(command)
             flags: {
                string: flags.string({
                   'char': 's',
-                  'description': 'Allows imports of string / text content',
+                  'description': 'Allows imports of string / text content.',
                   'multiple': true,
                   'default': '**/*.html'
                })
