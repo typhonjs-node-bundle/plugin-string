@@ -38,7 +38,7 @@ module.exports = async function(opts)
 {
    try
    {
-      process.pluginManager.add({ name: 'plugin-string', instance: PluginHandler });
+      global.$$pluginManager.add({ name: 'plugin-string', instance: PluginHandler });
 
       // Adds flags for various built in commands like `build`.
       s_ADD_FLAGS(opts.id);
@@ -55,6 +55,12 @@ module.exports = async function(opts)
 /**
  * Adds flags for various built in commands like `build`.
  *
+ * Added flags include:
+ * `--string`   - `-s` - Allows imports of string / text content.  - default: `(see below)` - env: DEPLOY_STRING'
+ *
+ * TODO: Test bad user entered data with the underlying Rollup plugin to see if a verification functionn needs to be
+ * added here.
+ *
  * @param {string} command - ID of the command being run.
  */
 function s_ADD_FLAGS(command)
@@ -63,7 +69,7 @@ function s_ADD_FLAGS(command)
    {
       // Add all built in flags for the build command.
       case 'build':
-         process.eventbus.trigger('oclif:system:flaghandler:add', {
+         global.$$eventbus.trigger('typhonjs:oclif:system:flaghandler:add', {
             command,
             plugin: 'plugin-string',
             flags: {
