@@ -1,3 +1,5 @@
+const { string }  = require('rollup-plugin-string');
+
 const { flags }   = require('@oclif/command');
 
 /**
@@ -7,9 +9,20 @@ const { flags }   = require('@oclif/command');
 class PluginHandler
 {
    /**
-    * @returns {string}
+    * Returns the configured input plugin for `rollup-plugin-string`
+    *
+    * @param {object} config        - The CLI config
+    * @param {object} config.flags  - The CLI config
+    *
+    * @returns {object} Rollup plugin
     */
-   static test() { return 'some testing'; }
+   static getInputPlugin(config = {})
+   {
+      if (config.flags && typeof config.flags.string === 'object')
+      {
+         return string(config.flags.string);
+      }
+   }
 
    /**
     * Wires up PluginHandler on the plugin eventbus.
@@ -22,8 +35,7 @@ class PluginHandler
     */
    static onPluginLoad(ev)
    {
-      // TODO: ADD EVENT REGISTRATION
-      // eventbus.on(`${eventPrepend}test`, PluginHandler.test, PluginHandler);
+      ev.eventbus.on('typhonjs:oclif:rollup:plugins:input:get', PluginHandler.getInputPlugin, PluginHandler);
    }
 }
 
@@ -38,7 +50,7 @@ module.exports = async function(opts)
 {
    try
    {
-      global.$$pluginManager.add({ name: 'plugin-string', instance: PluginHandler });
+      global.$$pluginManager.add({ name: '@typhonjs-node-bundle/plugin-string', instance: PluginHandler });
 
       // Adds flags for various built in commands like `build`.
       s_ADD_FLAGS(opts.id);
@@ -112,6 +124,21 @@ function s_ADD_FLAGS(command)
                      return ['**/*.html'];
                   }
                })
+            },
+
+            /**
+             * Verifies the `string` flag and checks that the data loaded is an array and transforms the option
+             * into the proper format which is `{ includes: [...data] }`
+             *
+             * @param {object}   flags - The CLI flags to verify.
+             */
+            verify: function(flags)
+            {
+               // replace should always be an array
+               if (Array.isArray(flags.string))
+               {
+                  flags.string = { include: flags.string }
+               }
             }
          });
          break;
