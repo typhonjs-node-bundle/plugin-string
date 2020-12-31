@@ -11,16 +11,16 @@ class PluginHandler
    /**
     * Returns the configured input plugin for `rollup-plugin-string`
     *
-    * @param {object} config        - The CLI config
-    * @param {object} config.flags  - The CLI config
+    * @param {object} bundleData - The CLI config
+    * @param {object} bundleData.cliFlags  - The CLI flags
     *
     * @returns {object} Rollup plugin
     */
-   static getInputPlugin(config = {})
+   static getInputPlugin(bundleData = {})
    {
-      if (config.flags && typeof config.flags.string === 'object')
+      if (bundleData.cliFlags && typeof bundleData.cliFlags.string === 'object')
       {
-         return string(config.flags.string);
+         return string(bundleData.cliFlags.string);
       }
    }
 
@@ -121,7 +121,7 @@ function s_ADD_FLAGS(command)
                         return result;
                      }
 
-                     return ['**/*.html'];
+                     return ['**/*.html', '**/*.hbs'];
                   }
                })
             },
