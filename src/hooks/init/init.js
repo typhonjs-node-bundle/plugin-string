@@ -1,6 +1,8 @@
-const { string }  = require('rollup-plugin-string');
+const { string }        = require('rollup-plugin-string');
 
-const { flags }   = require('@oclif/command');
+const { flags }         = require('@oclif/command');
+
+const { NonFatalError } = require('@typhonjs-node-bundle/oclif-commons');
 
 /**
  * Handles interfacing with the plugin manager adding event bindings to pass back a configured
@@ -99,23 +101,13 @@ function s_ADD_FLAGS(command)
                         try { result = JSON.parse(process.env.DEPLOY_STRING); }
                         catch (error)
                         {
-                           const parseError = new Error(
+                           throw new NonFatalError(
                             `Could not parse 'DEPLOY_STRING' as a JSON array;\n${error.message}`);
-
-                           // Set magic boolean for global CLI error handler to skip treating this as a fatal error.
-                           parseError.$$bundler_fatal = false;
-
-                           throw parseError;
                         }
 
                         if (!Array.isArray(result))
                         {
-                           const parseError = new Error(`Please format 'DEPLOY_STRING' as a JSON array.`);
-
-                           // Set magic boolean for global CLI error handler to skip treating this as a fatal error.
-                           parseError.$$bundler_fatal = false;
-
-                           throw parseError;
+                           throw new NonFatalError(`Please format 'DEPLOY_STRING' as a JSON array.`);
                         }
 
                         return result;
