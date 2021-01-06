@@ -11,9 +11,9 @@ class PluginLoader
    /**
     * Returns the `package.json` module name.
     *
-    * @returns {string[]}
+    * @returns {string}
     */
-   static get pluginName() { return ['@typhonjs-node-rollup/plugin-string']; }
+   static get pluginName() { return '@typhonjs-node-rollup/plugin-string'; }
 
    /**
     * Returns the rollup plugins managed.
@@ -125,7 +125,7 @@ class PluginLoader
    {
       ev.eventbus.on('typhonjs:oclif:bundle:plugins:main:input:get', PluginLoader.getInputPlugin, PluginLoader);
 
-      PluginLoader.addFlags(ev.pluginOptions.command, ev.eventbus);
+      PluginLoader.addFlags(ev.pluginOptions.id, ev.eventbus);
    }
 }
 
