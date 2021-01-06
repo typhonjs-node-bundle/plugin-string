@@ -9,6 +9,20 @@ const { NonFatalError } = require('@typhonjs-node-bundle/oclif-commons');
 class PluginLoader
 {
    /**
+    * Returns the `package.json` module name.
+    *
+    * @returns {string[]}
+    */
+   static get pluginName() { return ['@typhonjs-node-rollup/plugin-string']; }
+
+   /**
+    * Returns the rollup plugins managed.
+    *
+    * @returns {string[]}
+    */
+   static get rollupPlugins() { return ['rollup-plugin-string']; }
+
+   /**
     * Adds flags for various built in commands like `build`.
     *
     * Added flags include:
@@ -97,13 +111,6 @@ class PluginLoader
          return string(bundleData.cliFlags.string);
       }
    }
-
-   /**
-    * Returns the rollup plugins managed.
-    *
-    * @returns {string[]}
-    */
-   static get rollupPlugins() { return ['rollup-plugin-string']; }
 
    /**
     * Wires up PluginHandler on the plugin eventbus.
