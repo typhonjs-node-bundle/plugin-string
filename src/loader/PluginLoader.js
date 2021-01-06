@@ -42,7 +42,7 @@ class PluginLoader
          case 'bundle':
             eventbus.trigger('typhonjs:oclif:system:flaghandler:add', {
                command,
-               plugin: 'plugin-string',
+               plugin: PluginLoader.pluginName,
                flags: {
                   string: flags.string({
                      'char': 's',
