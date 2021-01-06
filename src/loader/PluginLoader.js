@@ -99,6 +99,13 @@ class PluginLoader
    }
 
    /**
+    * Returns the rollup plugins managed.
+    *
+    * @returns {string[]}
+    */
+   static get rollupPlugins() { return ['rollup-plugin-string']; }
+
+   /**
     * Wires up PluginHandler on the plugin eventbus.
     *
     * @param {PluginEvent} ev - The plugin event.
