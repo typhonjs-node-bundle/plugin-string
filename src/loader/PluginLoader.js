@@ -1,6 +1,6 @@
-const { string }        = require('rollup-plugin-string');
-const { flags }         = require('@oclif/command');
-const { NonFatalError } = require('@typhonjs-node-bundle/oclif-commons');
+import { string }          from 'rollup-plugin-string';
+import { flags }           from '@oclif/command';
+import { NonFatalError }   from '@typhonjs-node-bundle/oclif-commons';
 
 const s_CONFLICT_PACKAGES = ['rollup-plugin-string'];
 const s_PACKAGE_NAME = '@typhonjs-node-rollup/plugin-string';
@@ -9,7 +9,7 @@ const s_PACKAGE_NAME = '@typhonjs-node-rollup/plugin-string';
  * Handles interfacing with the plugin manager adding event bindings to pass back a configured
  * instance of `rollup-plugin-string`.
  */
-class PluginLoader
+export default class PluginLoader
 {
    /**
     * Returns the any modules that cause a conflict.
@@ -124,5 +124,3 @@ class PluginLoader
       PluginLoader.addFlags(ev.eventbus);
    }
 }
-
-module.exports = PluginLoader;
