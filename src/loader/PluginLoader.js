@@ -46,20 +46,20 @@ export default class PluginLoader
                'char': 's',
                'description': 'Allows imports of string / text content.',
                'multiple': true,
-               'default': function()
+               'default': function(envVars = process.env)
                {
                   const envVar = `${global.$$flag_env_prefix}_STRING`;
 
-                  if (typeof process.env[envVar] === 'string')
+                  if (typeof envVars[envVar] === 'string')
                   {
                      let result = void 0;
 
                      // Treat it as a JSON array.
-                     try { result = JSON.parse(process.env[envVar]); }
+                     try { result = JSON.parse(envVars[envVar]); }
                      catch (error)
                      {
                         throw new NonFatalError(
-                           `Could not parse '${envVar}' as a JSON array;\n${error.message}`);
+                         `Could not parse '${envVar}' as a JSON array;\n${error.message}`);
                      }
 
                      if (!Array.isArray(result))
