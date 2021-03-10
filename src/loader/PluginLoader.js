@@ -1,5 +1,5 @@
 import { string }          from 'rollup-plugin-string';
-import { NonFatalError }   from '@typhonjs-node-bundle/oclif-commons';
+import { NonFatalError }   from '@typhonjs-oclif/errors';
 
 const s_CONFLICT_PACKAGES = ['rollup-plugin-string'];
 const s_PACKAGE_NAME = '@typhonjs-node-rollup/plugin-string';
