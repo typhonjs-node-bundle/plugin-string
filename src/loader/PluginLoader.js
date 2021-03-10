@@ -1,5 +1,4 @@
 import { string }          from 'rollup-plugin-string';
-import { flags }           from '@oclif/command';
 import { NonFatalError }   from '@typhonjs-node-bundle/oclif-commons';
 
 const s_CONFLICT_PACKAGES = ['rollup-plugin-string'];
@@ -35,8 +34,10 @@ export default class PluginLoader
     * added here.
     *
     * @param {object} eventbus - The eventbus to add flags to.
+    *
+    * @param {object} flags - The Oclif flags generator.
     */
-   static addFlags(eventbus)
+   static addFlags(eventbus, flags)
    {
       eventbus.trigger('typhonjs:oclif:system:flaghandler:add', {
          command: 'bundle',
@@ -121,6 +122,6 @@ export default class PluginLoader
    {
       ev.eventbus.on('typhonjs:oclif:bundle:plugins:main:input:get', PluginLoader.getInputPlugin, PluginLoader);
 
-      PluginLoader.addFlags(ev.eventbus);
+      PluginLoader.addFlags(ev.eventbus, ev.pluginOptions.flags);
    }
 }
