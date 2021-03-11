@@ -50,7 +50,7 @@ export default class PluginLoader
                'default': function(context)
                {
                   const envVars = context === null ? {} : process.env;
-                  const envVar = `${global.$$flag_env_prefix}_STRING`;
+                  const envVar = `${global.$$cli_env_prefix}_STRING`;
 
                   if (typeof envVars[envVar] === 'string')
                   {
