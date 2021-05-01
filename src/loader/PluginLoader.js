@@ -1,4 +1,4 @@
-import { string }          from 'rollup-plugin-string';
+import PNS                 from 'rollup-plugin-string';
 import { NonFatalError }   from '@typhonjs-oclif/errors';
 
 const s_CONFLICT_PACKAGES = ['rollup-plugin-string'];
@@ -106,7 +106,7 @@ export default class PluginLoader
    {
       if (bundleData.cliFlags && typeof bundleData.cliFlags.string === 'object')
       {
-         return string(bundleData.cliFlags.string);
+         return PNS.string(bundleData.cliFlags.string);
       }
    }
 
